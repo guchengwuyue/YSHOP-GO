@@ -72,12 +72,12 @@ func main() {
 				}else {
 					method := strings.ToLower(ctx.Input.Method())
 					//部署线上开启
-					prohibit := "post,put,delete"
-					if url != "/admin/auth/logout" && strings.Contains(prohibit,method) {
-						ctx.Output.JSON(controllers.ErrMsg("演示环境禁止操作",40006),
-							true,true)
-						return
-					}
+					//prohibit := "post,put,delete"
+					//if url != "/admin/auth/logout" && strings.Contains(prohibit,method) {
+					//	ctx.Output.JSON(controllers.ErrMsg("演示环境禁止操作",40006),
+					//		true,true)
+					//	return
+					//}
 					mytoken := ctx.Input.Header("Authorization")
 					if len(mytoken) < bearerLength {
 						ctx.Output.Status = 401
