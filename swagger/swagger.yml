@@ -1,0 +1,667 @@
+swagger: "2.0"
+info:
+  title: YSHOP-GO API
+  description: YSHOP-GO管理系统API
+  version: 1.0.0
+  termsOfService: https://www.yixiang.co/
+basePath: /v1
+paths:
+  /auth/captcha:
+    get:
+      tags:
+      - auth
+      description: 获取验证码
+      operationId: LoginController.获取验证码
+  /auth/info:
+    get:
+      tags:
+      - auth
+      description: 获取用户信息
+      operationId: LoginController.获取用户信息
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /auth/login:
+    post:
+      tags:
+      - auth
+      description: 登录
+      operationId: LoginController.登录
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /auth/logout:
+    delete:
+      tags:
+      - auth
+      description: 退出登录
+      operationId: LoginController.退出登录
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /dept/:
+    get:
+      tags:
+      - dept
+      description: 获取部门列表
+      operationId: DeptController.获取部门列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - dept
+      description: 修改部门
+      operationId: DeptController.修改部门
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    post:
+      tags:
+      - dept
+      description: 添加部门
+      operationId: DeptController.添加部门
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    delete:
+      tags:
+      - dept
+      description: 删除部门
+      operationId: DeptController.删除部门
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /dict/:
+    get:
+      tags:
+      - dict
+      description: 获取字典列表
+      operationId: DictController.获取字典列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - dict
+      description: 修改字典
+      operationId: DictController.修改字典
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    post:
+      tags:
+      - dict
+      description: 添加字典
+      operationId: DictController.添加字典
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /dict/{id}:
+    delete:
+      tags:
+      - dict
+      description: 删除字典
+      operationId: DictController.删除字典
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /dictDetail/:
+    get:
+      tags:
+      - dictDetail
+      description: 获取字典详情列表
+      operationId: DictDetailController.获取字典详情列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - dictDetail
+      description: 修改字典详情
+      operationId: DictDetailController.修改字典详情
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    post:
+      tags:
+      - dictDetail
+      description: 添加字典详情
+      operationId: DictDetailController.添加字典详情
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /dictDetail/{id}:
+    delete:
+      tags:
+      - dictDetail
+      description: 删除字典详情
+      operationId: DictDetailController.删除字典详情
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /job/:
+    get:
+      tags:
+      - job
+      description: 岗位列表
+      operationId: JobController.岗位列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - job
+      description: 岗位修改
+      operationId: JobController.岗位修改
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    post:
+      tags:
+      - job
+      description: 岗位添加
+      operationId: JobController.岗位添加
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    delete:
+      tags:
+      - job
+      description: 岗位删除
+      operationId: JobController.岗位删除
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /menu/:
+    get:
+      tags:
+      - menu
+      description: 菜单列表
+      operationId: MenuController.菜单列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - menu
+      description: 菜单修改
+      operationId: MenuController.菜单修改
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    post:
+      tags:
+      - menu
+      description: 菜单添加
+      operationId: MenuController.菜单添加
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    delete:
+      tags:
+      - menu
+      description: 菜单删除
+      operationId: MenuController.菜单删除
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /menu/build:
+    get:
+      tags:
+      - menu
+      description: 菜单构建
+      operationId: MenuController.菜单构建
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /menu/tree:
+    get:
+      tags:
+      - menu
+      description: 菜单树形
+      operationId: MenuController.菜单树形
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /roles/:
+    get:
+      tags:
+      - roles
+      description: 角色列表
+      operationId: RoleController.角色列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - roles
+    post:
+      tags:
+      - roles
+      description: 角色添加
+      operationId: RoleController.角色添加
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    delete:
+      tags:
+      - roles
+      description: 角色删除
+      operationId: RoleController.角色删除
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /roles/{id}:
+    get:
+      tags:
+      - roles
+      description: 获取单个角色
+      operationId: RoleController.获取单个角色
+      parameters:
+      - in: path
+        name: id
+        description: 角色ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Role'
+  /roles/menu:
+    put:
+      tags:
+      - roles
+      description: 角色菜单更新
+      operationId: RoleController.角色菜单更新
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /user/:
+    get:
+      tags:
+      - user
+      description: 用户列表
+      operationId: UserController.用户列表
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    put:
+      tags:
+      - user
+      description: 用户编辑
+      operationId: UserController.用户编辑
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    post:
+      tags:
+      - user
+      description: 用户添加
+      operationId: UserController.用户添加
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+    delete:
+      tags:
+      - user
+      description: 用户删除
+      operationId: UserController.用户删除
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /user/center:
+    put:
+      tags:
+      - user
+      description: 用户修改个人信息
+      operationId: UserController.用户修改个人信息
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /user/updateAvatar:
+    post:
+      tags:
+      - user
+      description: 用户上传图像
+      operationId: UserController.用户上传图像
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+  /user/updatePass:
+    post:
+      tags:
+      - user
+      description: 用户修改密码
+      operationId: UserController.用户修改密码
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controllers.Result'
+definitions:
+  611.0xc000380630.false:
+    title: "false"
+    type: object
+  controllers.Result:
+    title: Result
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/611.0xc000380630.false'
+      msg:
+        type: string
+      status:
+        type: integer
+        format: int64
+  models.BaseModel:
+    title: BaseModel
+    type: object
+    properties:
+      createTime:
+        type: string
+        format: datetime
+      isDel:
+        type: integer
+        format: int32
+      updateTime:
+        type: string
+        format: datetime
+  models.Dept:
+    title: Dept
+    type: object
+    properties:
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/models.Dept'
+      createTime:
+        type: string
+        format: datetime
+      enabled:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      isDel:
+        type: integer
+        format: int32
+      label:
+        type: string
+      name:
+        type: string
+      pid:
+        type: integer
+        format: int64
+      updateTime:
+        type: string
+        format: datetime
+  models.Job:
+    title: Job
+    type: object
+    properties:
+      createTime:
+        type: string
+        format: datetime
+      dept:
+        $ref: '#/definitions/models.Dept'
+      enabled:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      isDel:
+        type: integer
+        format: int32
+      name:
+        type: string
+      sort:
+        type: integer
+        format: int32
+      updateTime:
+        type: string
+        format: datetime
+  models.Menu:
+    title: Menu
+    type: object
+    properties:
+      cache:
+        type: integer
+        format: int32
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/models.Menu'
+      component:
+        type: string
+      componentName:
+        type: string
+      createTime:
+        type: string
+        format: datetime
+      hidden:
+        type: integer
+        format: int32
+      icon:
+        type: string
+      id:
+        type: integer
+        format: int64
+      iframe:
+        type: integer
+        format: int32
+      isDel:
+        type: integer
+        format: int32
+      label:
+        type: string
+      name:
+        type: string
+      path:
+        type: string
+      permission:
+        type: string
+      pid:
+        type: integer
+        format: int64
+      router:
+        type: string
+      routerMethod:
+        type: string
+      sort:
+        type: integer
+        format: int32
+      type:
+        type: integer
+        format: int32
+      updateTime:
+        type: string
+        format: datetime
+  models.Role:
+    title: Role
+    type: object
+    properties:
+      Depts:
+        type: array
+        items:
+          $ref: '#/definitions/models.Dept'
+      Users:
+        type: array
+        items:
+          $ref: '#/definitions/models.User'
+      createTime:
+        type: string
+        format: datetime
+      dataScope:
+        type: string
+      id:
+        type: integer
+        format: int64
+      isDel:
+        type: integer
+        format: int32
+      level:
+        type: integer
+        format: int32
+      menus:
+        type: array
+        items:
+          $ref: '#/definitions/models.Menu'
+      name:
+        type: string
+      permission:
+        type: string
+      remark:
+        type: string
+      updateTime:
+        type: string
+        format: datetime
+  models.User:
+    title: User
+    type: object
+    properties:
+      Permissions:
+        type: array
+        items:
+          type: string
+      avatar:
+        type: string
+      createTime:
+        type: string
+        format: datetime
+      dept:
+        $ref: '#/definitions/models.Dept'
+      email:
+        type: string
+      enabled:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      isDel:
+        type: integer
+        format: int32
+      job:
+        $ref: '#/definitions/models.Job'
+      nickName:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      roleIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      roles:
+        type: array
+        items:
+          $ref: '#/definitions/models.Role'
+      sex:
+        type: string
+      updateTime:
+        type: string
+        format: datetime
+      username:
+        type: string
+tags:
+- name: auth
+  description: |
+    登录api
+- name: user
+  description: |
+    用户 API
+- name: menu
+  description: |
+    菜单api
+- name: dict
+  description: |
+    字典api
+- name: dictDetail
+  description: |
+    字典详情api
+- name: dept
+  description: |
+    部门api
+- name: job
+  description: |
+    岗位api
+- name: roles
+  description: |
+    角色 API
