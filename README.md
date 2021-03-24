@@ -58,6 +58,11 @@ YSHOP-GO基于当前流行技术组合的前后端RBAC管理系统：Go1.15.x+Be
 4、线上部署： bee pack  -be GOOS=linux  打包然后上传服务器命令： nohup ./yshop & 
 5、配置nginx 反向代理即可
 ```
+### 效果图
+|  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0324/091742_84ebf16e_477893.png "01.png") | ![输入图片说明](https://images.gitee.com/uploads/images/2021/0324/091938_e3408f92_477893.png "02.png")  |
+|---|---|
+|  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0324/092327_601b2411_477893.png "03.png") |  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0324/092343_9cadff96_477893.png "04.png") |
+
 #### 特别鸣谢
 
 - beego:https://github.com/beego/beego/
