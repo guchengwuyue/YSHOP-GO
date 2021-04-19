@@ -1,4 +1,4 @@
-<h1 style="text-align: center">YSHOP-GO 后台管理系统</h1>
+<h1 style="text-align: center">beego-vue-admin 后台管理系统</h1>
 
 
 #### 项目简介
