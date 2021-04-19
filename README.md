@@ -13,8 +13,8 @@ beego-vue-admin基于当前流行技术组合的前后端RBAC管理系统：Go1.
 
 |     |   后端源码  |   前端源码  |
 |---  |--- | --- |
-|  码云  |  https://gitee.com/guchengwuyue/YSHOP-GO   |  https://gitee.com/guchengwuyue/YSHOP-GO-WEB   |
-|  github   | https://github.com/guchengwuyue/YSHOP-GO   |  https://github.com/guchengwuyue/YSHOP-GO-WEB |
+|  码云  |  https://gitee.com/guchengwuyue/beego-vue-admin   |  https://gitee.com/guchengwuyue/beego-vue-admin-web   |
+|  github   | https://github.com/guchengwuyue/beego-vue-admin  |  https://github.com/guchengwuyue/beego-vue-admin-web |
 
 
 ####  系统功能
