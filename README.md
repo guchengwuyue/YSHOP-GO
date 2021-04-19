@@ -2,7 +2,7 @@
 
 
 #### 项目简介
-YSHOP-GO基于当前流行技术组合的前后端RBAC管理系统：Go1.15.x+Beego2.x+Jwt+Redis+Mysql8+Vue
+beego-vue-admin基于当前流行技术组合的前后端RBAC管理系统：Go1.15.x+Beego2.x+Jwt+Redis+Mysql8+Vue
 的前后端分离系统，权限控制采用 RBAC，支持数据字典与数据权限管理，支持动态路由等
 
 **体验地址：**  [https://go.yixiang.co](https://go.yixiang.co)
