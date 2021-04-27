@@ -42,7 +42,7 @@ func (c *UserController) GetAll() {
 // @Success 200 {object} controllers.Result
 // @router / [post]
 func (c *UserController) Post()  {
-	var model models.User
+	var model models.SysUser
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	b, _ := valid.Valid(&model)
@@ -64,7 +64,7 @@ func (c *UserController) Post()  {
 // @Success 200 {object} controllers.Result
 // @router / [put]
 func (c *UserController) Put()  {
-	var model models.User
+	var model models.SysUser
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	logs.Info("======start======")

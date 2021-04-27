@@ -9,7 +9,7 @@ import (
 	"yixiang.co/yshop/untils"
 )
 
-type User struct {
+type SysUser struct {
 	Id     int64 `json:"id"`
 	Avatar string `json:"avatar"`
 	Email  string `json:"email"`
@@ -19,13 +19,13 @@ type User struct {
 	//DeptId int32
 	Phone string `json:"phone"`
 	//JobId int32
-	NickName string `json:"nickName"`
-	Sex string `json:"sex"`
-	Roles []*Role `json:"roles" orm:"rel(m2m);rel_through(yixiang.co/yshop/models.UsersRoles)"`
-	Jobs *Job `json:"job" orm:"column(job_id);bigint;rel(one)""`
-	Depts *Dept `json:"dept" orm:"column(dept_id);bigint;rel(one)""`
+	NickName string      `json:"nickName"`
+	Sex string           `json:"sex"`
+	Roles []*SysRole        `json:"roles" orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysUsersRoles)"`
+	Jobs *SysJob         `json:"job" orm:"column(job_id);bigint;rel(one)""`
+	Depts *SysDept          `json:"dept" orm:"column(dept_id);bigint;rel(one)""`
 	Permissions []string `orm:"-"`
-	RoleIds []int64 `json:"roleIds" orm:"-"`
+	RoleIds []int64      `json:"roleIds" orm:"-"`
 	BaseModel
 }
 
@@ -35,14 +35,14 @@ type RoleId struct {
 
 
 func init() {
-	orm.RegisterModel(new(User))
+	orm.RegisterModel(new(SysUser))
 }
 
 
 func FindByUserId(id int64) ([]string,error)  {
 	o := orm.NewOrm()
-	var roles []Role
-	_, err := o.Raw("SELECT r.* FROM role r, users_roles u " +
+	var roles []SysRole
+	_, err := o.Raw("SELECT r.* FROM sys_role r, sys_users_roles u " +
 		"WHERE r.id = u.role_id AND u.user_id = ?", id).QueryRows(&roles)
 	for k, _ := range roles {
 		_, err = o.LoadRelated(&roles[k], "Menus")
@@ -64,10 +64,10 @@ func FindByUserId(id int64) ([]string,error)  {
 }
 
 //根据用户名返回
-func GetUserByUsername(name string) (v *User, err error)  {
+func GetUserByUsername(name string) (v *SysUser, err error)  {
 	o := orm.NewOrm()
-	user := &User{}
-	err = o.QueryTable(new(User)).Filter("username",name).RelatedSel().One(user)
+	user := &SysUser{}
+	err = o.QueryTable(new(SysUser)).Filter("username",name).RelatedSel().One(user)
 	if _, err = o.LoadRelated(user, "Roles");err != nil{
 		return nil, err
 	}
@@ -82,12 +82,12 @@ func GetUserByUsername(name string) (v *User, err error)  {
 
 // GetUserById retrieves User by Id. Returns error if
 // Id doesn't exist
-func GetUserById(id int64) (v *User, err error) {
+func GetUserById(id int64) (v *SysUser, err error) {
 	//var userlist []User
 	o := orm.NewOrm()
-	v = &User{Id: id}
+	v = &SysUser{Id: id}
 
-	err = o.QueryTable(new(User)).Filter("Id", id).RelatedSel().One(v)
+	err = o.QueryTable(new(SysUser)).Filter("Id", id).RelatedSel().One(v)
 
 
 	if _, err = o.LoadRelated(v, "Roles");err!=nil{
@@ -103,10 +103,10 @@ func GetUserById(id int64) (v *User, err error) {
 }
 
 // get all
-func GetAllUser(base dto.BasePage,query ...interface{}) (int,[]User)  {
+func GetAllUser(base dto.BasePage,query ...interface{}) (int,[]SysUser)  {
 	var (
-		tableName = "user"
-		users []User
+		tableName = "sys_user"
+		users []SysUser
 		condition = ""
 	)
 	if base.Blurry != "" {
@@ -135,14 +135,14 @@ func GetAllUser(base dto.BasePage,query ...interface{}) (int,[]User)  {
 	return total,users
 }
 
-func UpdateCurrentUser(m *User) ( err error)  {
+func UpdateCurrentUser(m *SysUser) ( err error)  {
 	o := orm.NewOrm()
 	_, err = o.Update(m)
 	return
 }
 
 
-func AddUser(m *User) (id int64, err error) {
+func AddUser(m *SysUser) (id int64, err error) {
 	o := orm.NewOrm()
 	//transaction
 	err = o.DoTx(func(ctx context.Context, txOrm orm.TxOrmer) error {
@@ -155,14 +155,14 @@ func AddUser(m *User) (id int64, err error) {
 		var ee error
 		// add user_role
 		for _, roleId := range m.RoleIds {
-			_, ee = txOrm.Raw("INSERT INTO users_roles (user_id,role_id) VALUES (?,?)", id, roleId).Exec()
+			_, ee = txOrm.Raw("INSERT INTO sys_users_roles (user_id,role_id) VALUES (?,?)", id, roleId).Exec()
 		}
 		return ee
 	})
 	return 0,err
 }
 
-func UpdateByUser(m *User) (err error) {
+func UpdateByUser(m *SysUser) (err error) {
 	o := orm.NewOrm()
 	//transaction
 	err = o.DoTx(func(ctx context.Context, txOrm orm.TxOrmer) error {
@@ -172,14 +172,14 @@ func UpdateByUser(m *User) (err error) {
 			return e
 		}
 		//先删除
-		_, eee := txOrm.Raw("delete from users_roles WHERE user_id = ?",  m.Id).Exec()
+		_, eee := txOrm.Raw("delete from sys_users_roles WHERE user_id = ?",  m.Id).Exec()
 		if eee != nil {
 			return eee
 		}
 
 		var ee error
 		for _, roleId := range m.RoleIds {
-			_, ee = txOrm.Raw("INSERT INTO users_roles (user_id,role_id) VALUES (?,?)", m.Id, roleId).Exec()
+			_, ee = txOrm.Raw("INSERT INTO sys_users_roles (user_id,role_id) VALUES (?,?)", m.Id, roleId).Exec()
 		}
 
 		return ee
@@ -194,8 +194,8 @@ func DelByUser(ids []int64) (err error) {
 	str := untils.ReturnQ(len(ids))
 	o := orm.NewOrm()
 	err = o.DoTx(func(ctx context.Context, txOrm orm.TxOrmer) error {
-		_, e1 := txOrm.Raw("UPDATE user SET is_del = ? WHERE id in("+str+")", 1, ids).Exec()
-		_, e2 := txOrm.Raw("delete from users_roles WHERE user_id in("+str+")",  ids).Exec()
+		_, e1 := txOrm.Raw("UPDATE sys_user SET is_del = ? WHERE id in("+str+")", 1, ids).Exec()
+		_, e2 := txOrm.Raw("delete from sys_users_roles WHERE user_id in("+str+")",  ids).Exec()
 
 		if e1 != nil {
 			return e1

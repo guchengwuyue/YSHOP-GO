@@ -6,7 +6,7 @@ import (
 	"yixiang.co/yshop/dto"
 )
 
-type Dict struct {
+type SysDict struct {
 	Id     int64 `json:"id"`
 	Name string `json:"name" valid:"Required;"`
 	Remark string `json:"remark" valid:"Required;"`
@@ -14,14 +14,14 @@ type Dict struct {
 }
 
 func init() {
-	orm.RegisterModel(new(Dict))
+	orm.RegisterModel(new(SysDict))
 }
 
 // get all
-func GetAllDict(base dto.BasePage,query ...interface{}) (int,[]Dict)  {
+func GetAllDict(base dto.BasePage,query ...interface{}) (int,[]SysDict)  {
 	var (
-		tableName = "dict"
-		dicts []Dict
+		tableName = "sys_dict"
+		dicts []SysDict
 		condition = ""
 	)
 	if base.Blurry != "" {
@@ -37,13 +37,13 @@ func GetAllDict(base dto.BasePage,query ...interface{}) (int,[]Dict)  {
 }
 
 // last inserted Id on success.
-func AddDict(m *Dict) (id int64, err error) {
+func AddDict(m *SysDict) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-func UpdateByDict(m *Dict) (err error) {
+func UpdateByDict(m *SysDict) (err error) {
 	o := orm.NewOrm()
 	_, err = o.Update(m)
 	return
@@ -51,6 +51,6 @@ func UpdateByDict(m *Dict) (err error) {
 
 func DelByDict(id int64) (err error) {
 	o := orm.NewOrm()
-	_, err = o.Raw("UPDATE dict SET is_del = ? WHERE id = ?", 1, id).Exec()
+	_, err = o.Raw("UPDATE sys_dict SET is_del = ? WHERE id = ?", 1, id).Exec()
 	return
 }

@@ -7,26 +7,26 @@ import (
 	"yixiang.co/yshop/untils"
 )
 
-type Job struct {
+type SysJob struct {
 	Id     int64 `json:"id"`
 	Name string `json:"name" valid:"Required;"`
 	Enabled int8 `json:"enabled"`
 	Sort int8 `json:"sort"`
 	//DeptId int64 `json:"deptId"`
-	Dept *Dept `json:"dept" orm:"column(dept_id);bigint;rel(one)""`
+	Dept *SysDept `json:"dept" orm:"column(dept_id);bigint;rel(one)""`
 	BaseModel
 }
 
 func init() {
-	orm.RegisterModel(new(Job))
+	orm.RegisterModel(new(SysJob))
 }
 
 
 // get all
-func GetAllJob(base dto.BasePage,query ...interface{}) (int,[]Job)  {
+func GetAllJob(base dto.BasePage,query ...interface{}) (int,[]SysJob)  {
 	var (
-		tableName = "job"
-		lists []Job
+		tableName = "sys_job"
+		lists []SysJob
 		condition = ""
 	)
 	if base.Blurry != "" {
@@ -51,13 +51,13 @@ func GetAllJob(base dto.BasePage,query ...interface{}) (int,[]Job)  {
 	return total,lists
 }
 
-func AddJob(m *Job) (id int64, err error) {
+func AddJob(m *SysJob) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-func UpdateByJob(m *Job) (err error) {
+func UpdateByJob(m *SysJob) (err error) {
 	o := orm.NewOrm()
 	_, err = o.Update(m)
 	return
@@ -66,6 +66,6 @@ func UpdateByJob(m *Job) (err error) {
 func DelByJob(ids []int64) (err error) {
 	str := untils.ReturnQ(len(ids))
 	o := orm.NewOrm()
-	_, err = o.Raw("UPDATE job SET is_del = ? WHERE id in("+str+")", 1, ids).Exec()
+	_, err = o.Raw("UPDATE sys_job SET is_del = ? WHERE id in("+str+")", 1, ids).Exec()
 	return
 }

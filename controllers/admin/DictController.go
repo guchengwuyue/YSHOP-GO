@@ -2,51 +2,50 @@ package admin
 
 import (
 	"encoding/json"
-	"github.com/beego/beego/v2/core/logs"
 	"github.com/beego/beego/v2/core/validation"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/models"
 	"yixiang.co/yshop/vo"
 )
-// 部门api
-type DeptController struct {
+
+// 字典api
+type DictController struct {
 	controllers.BaseController
 }
 
-func (c *DeptController) URLMapping() {
+func (c *DictController) URLMapping() {
 	c.Mapping("Post", c.Post)
+	//c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
-	c.Mapping("Put", c.Put)
-	c.Mapping("Delete", c.Delete)
+	//c.Mapping("Put", c.Put)
+	//c.Mapping("Delete", c.Delete)
 }
 
-// @Title 获取部门列表
-// @Description 获取部门列表
+// @Title 获取字典列表
+// @Description 获取字典列表
 // @Success 200 {object} controllers.Result
 // @router / [get]
-func (c *DeptController) GetAll() {
-	name := c.GetString("name")
-	enabled, _ := c.GetInt8("enabled",-1)
-	list := models.GetAllDepts(name,enabled)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: 0})
+func (c *DictController) GetAll() {
+	total,list := models.GetAllDict(c.GetParams())
+	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: total})
 	c.ServeJSON()
 }
 
-// @Title 添加部门
-// @Description 添加部门
+// @Title 添加字典
+// @Description 添加字典
 // @Success 200 {object} controllers.Result
 // @router / [post]
-func (c *DeptController) Post()  {
-	var model models.Dept
+func (c *DictController) Post()  {
+	var dictModel models.SysDict
 	valid := validation.Validation{}
-	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
+	json.Unmarshal(c.Ctx.Input.RequestBody, &dictModel)
+	b, _ := valid.Valid(&dictModel)
 	if !b {
 		for _, err := range valid.Errors {
 			c.Data["json"] = controllers.ErrMsg(err.Message)
 		}
 	}
-	_, e := models.AddDept(&model)
+	_, e := models.AddDict(&dictModel)
 	if e != nil {
 		c.Data["json"] = controllers.ErrMsg(e.Error())
 	}
@@ -54,21 +53,21 @@ func (c *DeptController) Post()  {
 	c.ServeJSON()
 }
 
-// @Title 修改部门
-// @Description 修改部门
+// @Title 修改字典
+// @Description 修改字典
 // @Success 200 {object} controllers.Result
 // @router / [put]
-func (c *DeptController) Put()  {
-	var model models.Dept
+func (c *DictController) Put()  {
+	var dictModel models.SysDict
 	valid := validation.Validation{}
-	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
+	json.Unmarshal(c.Ctx.Input.RequestBody, &dictModel)
+	b, _ := valid.Valid(&dictModel)
 	if !b {
 		for _, err := range valid.Errors {
 			c.Data["json"] = controllers.ErrMsg(err.Message)
 		}
 	}
-	e := models.UpdateByDept(&model)
+	e := models.UpdateByDict(&dictModel)
 	if e != nil {
 		c.Data["json"] = controllers.ErrMsg(e.Error())
 	}
@@ -76,15 +75,13 @@ func (c *DeptController) Put()  {
 	c.ServeJSON()
 }
 
-// @Title 删除部门
-// @Description 删除部门
+// @Title 删除字典
+// @Description 删除字典
 // @Success 200 {object} controllers.Result
-// @router / [delete]
-func (c *DeptController) Delete() {
-	var ids []int64
-	json.Unmarshal(c.Ctx.Input.RequestBody, &ids)
-	logs.Info(ids)
-	e := models.DelByDept(ids)
+// @router /:id [delete]
+func (c *DictController) Delete() {
+	id, _ := c.GetInt64(":id",1)
+	e := models.DelByDict(id)
 	if e != nil {
 		c.Data["json"] = controllers.ErrMsg(e.Error())
 	}

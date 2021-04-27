@@ -50,7 +50,7 @@ func (c *RoleController) GetAll() {
 // @Success 200 {object} controllers.Result
 // @router / [post]
 func (c *RoleController) Post()  {
-	var model models.Role
+	var model models.SysRole
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	b, _ := valid.Valid(&model)
@@ -69,7 +69,7 @@ func (c *RoleController) Post()  {
 
 // @router / [put]
 func (c *RoleController) Put()  {
-	var model models.Role
+	var model models.SysRole
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	b, _ := valid.Valid(&model)

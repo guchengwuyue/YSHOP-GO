@@ -7,36 +7,36 @@ import (
 	"yixiang.co/yshop/vo/menu"
 )
 
-type Menu struct {
-	Id     int64 `json:"id"`
-	Name string `json:"name" valid:"Required;"`
-	IFrame int8 `json:"iframe"`
-	Component string `json:"component"`
-	Pid int64 `json:"pid"`
-	Sort int32 `json:"sort"`
-	Icon string `json:"icon"`
-	Path string `json:"path"`
-	Cache int8 `json:"cache"`
-	Hidden int8 `json:"hidden"`
+type SysMenu struct {
+	Id     int64         `json:"id"`
+	Name string          `json:"name" valid:"Required;"`
+	IFrame int8          `json:"iframe"`
+	Component string     `json:"component"`
+	Pid int64            `json:"pid"`
+	Sort int32           `json:"sort"`
+	Icon string          `json:"icon"`
+	Path string          `json:"path"`
+	Cache int8           `json:"cache"`
+	Hidden int8          `json:"hidden"`
 	ComponentName string `json:"componentName"`
-	Permission string `json:"permission"`
-	Type int32 `json:"type"`
-	Router string `json:"router"`
+	Permission string    `json:"permission"`
+	Type int32           `json:"type"`
+	Router string        `json:"router"`
 	RouterMethod  string `json:"routerMethod"`
-	Children []Menu `json:"children" orm:"-"`
-	Label string  `orm:"-" json:"label"`
+	Children []SysMenu   `json:"children" orm:"-"`
+	Label string         `orm:"-" json:"label"`
 	BaseModel
 }
 
 func init() {
-	orm.RegisterModel(new(Menu))
+	orm.RegisterModel(new(SysMenu))
 }
 
 
-func GetAllMenus(name string) []Menu {
-	var menus []Menu
+func GetAllMenus(name string) []SysMenu {
+	var menus []SysMenu
 	o := orm.NewOrm()
-	qs := o.QueryTable("menu").Filter("is_del",0)
+	qs := o.QueryTable("sys_menu").Filter("is_del",0)
 	if name != "" {
 		qs = qs.Filter("name",name)
 	}
@@ -46,8 +46,8 @@ func GetAllMenus(name string) []Menu {
 }
 
 //递归函数
-func RecursionMenuList(data []Menu, pid int64) []Menu {
-	var listTree = make([]Menu,0)
+func RecursionMenuList(data []SysMenu, pid int64) []SysMenu {
+	var listTree = make([]SysMenu,0)
 	for _, value := range data {
 		value.Label = value.Name
 		if value.Pid == pid {
@@ -58,13 +58,13 @@ func RecursionMenuList(data []Menu, pid int64) []Menu {
 	return listTree
 }
 
-func AddMenu(m *Menu) (id int64, err error) {
+func AddMenu(m *SysMenu) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-func UpdateByMenu(m *Menu) (err error) {
+func UpdateByMenu(m *SysMenu) (err error) {
 	o := orm.NewOrm()
 	_, err = o.Update(m)
 	return
@@ -74,15 +74,15 @@ func DelByMenu(ids []int64) (err error) {
 	str := untils.ReturnQ(len(ids))
 	logs.Info(str)
 	o := orm.NewOrm()
-	_, err = o.Raw("UPDATE menu SET is_del = ? WHERE id in("+str+")", 1, ids).Exec()
+	_, err = o.Raw("UPDATE sys_menu SET is_del = ? WHERE id in("+str+")", 1, ids).Exec()
 	return
 }
 
 //获取权限string
 func FindByRouterAndMethod(url string, method string) (permission string) {
 	o := orm.NewOrm()
-	var menu Menu
-	err := o.QueryTable(new(Menu)).Filter("router",url).Filter("router_method",method).One(&menu)
+	var menu SysMenu
+	err := o.QueryTable(new(SysMenu)).Filter("router",url).Filter("router_method",method).One(&menu)
 	if err != nil {
 		return ""
 	}
@@ -92,16 +92,16 @@ func FindByRouterAndMethod(url string, method string) (permission string) {
 func BuildMenus(uid int64) []menu.MenuVo  {
 	o := orm.NewOrm()
 	var lists orm.ParamsList
-	_, err := o.Raw("SELECT r.* FROM role r, users_roles u " +
+	_, err := o.Raw("SELECT r.* FROM sys_role r, sys_users_roles u " +
 		"WHERE r.id = u.role_id AND u.user_id = ?",uid).ValuesFlat(&lists,"id")
 	if err != nil {
 		logs.Error(err)
 	}
 	idsStr := untils.Convert(lists)
 	logs.Info(idsStr)
-	var menus []Menu
-	_, e := o.Raw("select m.* from menu m LEFT OUTER JOIN roles_menus t on m.id= t.menu_id " +
-		"LEFT OUTER JOIN role r on r.id = t.role_id where m.is_del=0 and m.hidden=0 and m.type!=2 and r.id in (?)",
+	var menus []SysMenu
+	_, e := o.Raw("select m.* from sys_menu m LEFT OUTER JOIN sys_roles_menus t on m.id= t.menu_id " +
+		"LEFT OUTER JOIN sys_role r on r.id = t.role_id where m.is_del=0 and m.hidden=0 and m.type!=2 and r.id in (?)",
 		idsStr).QueryRows(&menus)
 
 	if e != nil {
@@ -112,8 +112,8 @@ func BuildMenus(uid int64) []menu.MenuVo  {
 
 }
 
-func buildTree(menus []Menu) ([]Menu) {
-	var trees []Menu
+func buildTree(menus []SysMenu) ([]SysMenu) {
+	var trees []SysMenu
 	for _, menu := range menus {
 		if menu.Pid == 0 {
 			trees = append(trees, menu)
@@ -121,7 +121,7 @@ func buildTree(menus []Menu) ([]Menu) {
 	}
 
 	for k, tree := range trees {
-		var child []Menu
+		var child []SysMenu
 		for _, it := range menus {
 			if it.Pid == tree.Id {
 				child = append(child,it)
@@ -134,7 +134,7 @@ func buildTree(menus []Menu) ([]Menu) {
 
 }
 
-func buildMenus(menus []Menu) []menu.MenuVo {
+func buildMenus(menus []SysMenu) []menu.MenuVo {
 	var list []menu.MenuVo
 	for _ , menuO := range menus {
 		menuList := menuO.Children

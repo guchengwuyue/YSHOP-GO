@@ -38,7 +38,7 @@ func (c *DictDetailController) GetAll() {
 // @Success 200 {object} controllers.Result
 // @router / [post]
 func (c *DictDetailController) Post()  {
-	var model models.DictDetail
+	var model models.SysDictDetail
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	logs.Info(model)
@@ -61,7 +61,7 @@ func (c *DictDetailController) Post()  {
 // @Success 200 {object} controllers.Result
 // @router / [put]
 func (c *DictDetailController) Put()  {
-	var model models.DictDetail
+	var model models.SysDictDetail
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	b, _ := valid.Valid(&model)

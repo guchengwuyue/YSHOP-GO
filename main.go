@@ -122,7 +122,7 @@ func checkPermission(url string, method string, token string) int  {
 	var key = common.REDIS_PREFIX_AUTH + token
 	userMap, _:= redis.Get(key)
 	jsonStr := userMap[key]
-	user := &models.User{}
+	user := &models.SysUser{}
 	json.Unmarshal([]byte(jsonStr),user)
 
 	index := untils.Contains(user.Permissions,permission)

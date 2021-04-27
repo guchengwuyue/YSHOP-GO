@@ -2,7 +2,7 @@ package models
 
 import "github.com/beego/beego/v2/client/orm"
 
-type Log struct {
+type SysLog struct {
 	Id     int64
 	Description string
 	ExceptionDetail string
@@ -19,5 +19,5 @@ type Log struct {
 }
 
 func init() {
-	orm.RegisterModel(new(Log))
+	orm.RegisterModel(new(SysLog))
 }

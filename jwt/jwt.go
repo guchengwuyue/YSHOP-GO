@@ -37,7 +37,7 @@ func init()  {
 	verifyKey,_ = beego.AppConfig.String("jwt_token")
 }
 
-func GenerateToken(m *models.User,d time.Duration) (string,error) {
+func GenerateToken(m *models.SysUser,d time.Duration) (string,error) {
 	m.Password = ""
 	//m.Permissions = []string{}
 	expireTime := time.Now().Add(d)
@@ -123,13 +123,13 @@ func GetAdminUser(c *context.BeegoInput) (*vo.JwtUser, error) {
 }
 
 //返回 detail user
-func GetAdminDetailUser(c *context.BeegoInput) *models.User {
+func GetAdminDetailUser(c *context.BeegoInput) *models.SysUser {
 	mytoken := c.Header("Authorization")
 	token := strings.TrimSpace(mytoken[bearerLength:])
 	var key = common.REDIS_PREFIX_AUTH + token
 	userMap, _:= redis.Get(key)
 	jsonStr := userMap[key]
-	user := &models.User{}
+	user := &models.SysUser{}
 	json.Unmarshal([]byte(jsonStr),user)
 	return user
 }

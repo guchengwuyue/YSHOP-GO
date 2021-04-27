@@ -2,7 +2,7 @@ package models
 
 import "github.com/beego/beego/v2/client/orm"
 
-type Picture struct {
+type SysPicture struct {
 	Id     int64
 	DeleteUrl string
 	Filename string
@@ -16,5 +16,5 @@ type Picture struct {
 }
 
 func init() {
-	orm.RegisterModel(new(Picture))
+	orm.RegisterModel(new(SysPicture))
 }

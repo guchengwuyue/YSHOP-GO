@@ -6,7 +6,7 @@ import (
 	"yixiang.co/yshop/dto"
 )
 
-type DictDetail struct {
+type SysDictDetail struct {
 	Id     int64 `json:"id"`
 	Label string `json:"label" valid:"Required;"`
 	Value string `json:"value" valid:"Required;"`
@@ -17,14 +17,14 @@ type DictDetail struct {
 }
 
 func init() {
-	orm.RegisterModel(new(DictDetail))
+	orm.RegisterModel(new(SysDictDetail))
 }
 
 // get all
-func GetAllDictDetail(base dto.BasePage,query ...interface{}) (int,[]DictDetail)  {
+func GetAllDictDetail(base dto.BasePage,query ...interface{}) (int,[]SysDictDetail)  {
 	var (
-		tableName = "dict_detail"
-		lists []DictDetail
+		tableName = "sys_dict_detail"
+		lists []SysDictDetail
 		condition = ""
 	)
 	if base.Blurry != "" {
@@ -47,13 +47,13 @@ func GetAllDictDetail(base dto.BasePage,query ...interface{}) (int,[]DictDetail)
 	return total,lists
 }
 
-func AddDictDetail(m *DictDetail) (id int64, err error) {
+func AddDictDetail(m *SysDictDetail) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-func UpdateByDictDetail(m *DictDetail) (err error) {
+func UpdateByDictDetail(m *SysDictDetail) (err error) {
 	o := orm.NewOrm()
 	_, err = o.Update(m)
 	return
@@ -61,7 +61,7 @@ func UpdateByDictDetail(m *DictDetail) (err error) {
 
 func DelByDictDetail(id int64) (err error) {
 	o := orm.NewOrm()
-	_, err = o.Raw("UPDATE dict_detail SET is_del = ? WHERE id = ?", 1, id).Exec()
+	_, err = o.Raw("UPDATE sys_dict_detail SET is_del = ? WHERE id = ?", 1, id).Exec()
 	return
 }
 
