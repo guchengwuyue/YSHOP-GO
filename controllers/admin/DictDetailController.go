@@ -28,8 +28,8 @@ func (c *DictDetailController) URLMapping() {
 func (c *DictDetailController) GetAll() {
 	dictId, _ := c.GetInt64("dictId")
 	dictName := c.GetString("dictName")
-	total,list := models.GetAllDictDetail(c.GetParams(),dictId,dictName)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: total})
+	total, list := models.GetAllDictDetail(c.GetParams(), dictId, dictName)
+	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list, TotalElements: total})
 	c.ServeJSON()
 }
 
@@ -37,7 +37,7 @@ func (c *DictDetailController) GetAll() {
 // @Description 添加字典详情
 // @Success 200 {object} controllers.Result
 // @router / [post]
-func (c *DictDetailController) Post()  {
+func (c *DictDetailController) Post() {
 	var model models.SysDictDetail
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
@@ -60,7 +60,7 @@ func (c *DictDetailController) Post()  {
 // @Description 修改字典详情
 // @Success 200 {object} controllers.Result
 // @router / [put]
-func (c *DictDetailController) Put()  {
+func (c *DictDetailController) Put() {
 	var model models.SysDictDetail
 	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
@@ -83,7 +83,7 @@ func (c *DictDetailController) Put()  {
 // @Success 200 {object} controllers.Result
 // @router /:id [delete]
 func (c *DictDetailController) Delete() {
-	id, _ := c.GetInt64(":id",1)
+	id, _ := c.GetInt64(":id", 1)
 	e := models.DelByDictDetail(id)
 	if e != nil {
 		c.Data["json"] = controllers.ErrMsg(e.Error())
