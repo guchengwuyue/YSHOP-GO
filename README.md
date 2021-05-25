@@ -30,24 +30,24 @@ beego-vue-admin基于当前流行技术组合的前后端RBAC管理系统：Go1.
 
 ```
 - common 公共模块
+    - jwt jwt模块
+    - redis redis模块
+    - untils 工具模块
     - constant.go 常量
 - conf 公共配置
 - controllers 控制器模块
 	- admin 管理后台
 	- app app模块
     - base.go 公共控制器
+- fiters 过滤器
+- initialize 初始化
 - dto dto模块
-- jwt jwt模块
 - logs 日志存放
 - models 公共模型
-- redis redis模块
-	- pool.go 连接池
-    - redis.go 常用操作
 - routers 路由
 - static 上传图片资源目录
 - swagger swagger
 - tests tests
-- untils 工具模块
 - vo vo模块
 ```
 #### 启动与部署

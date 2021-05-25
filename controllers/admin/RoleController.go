@@ -31,8 +31,7 @@ func (c *RoleController) GetOne() {
 	id := c.Ctx.Input.Param(":id")
 	id64, _ := strconv.ParseInt(id,10,64)
 	role := models.GetOneRole(id64)
-	c.Data["json"] = controllers.SuccessData(role)
-	c.ServeJSON()
+	c.Ok(role)
 }
 
 // @Title 角色列表
@@ -41,8 +40,7 @@ func (c *RoleController) GetOne() {
 // @router / [get]
 func (c *RoleController) GetAll() {
 	total,list := models.GetAllRole(c.GetParams())
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: total})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: list,TotalElements: total})
 }
 
 // @Title 角色添加
@@ -56,15 +54,14 @@ func (c *RoleController) Post()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddRole(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @router / [put]
@@ -75,15 +72,14 @@ func (c *RoleController) Put()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByRole(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 角色删除
@@ -96,10 +92,9 @@ func (c *RoleController) Delete() {
 	logs.Info(ids)
 	e := models.DelByRole(ids)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 角色菜单更新
@@ -115,10 +110,9 @@ func (c *RoleController) Menu()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5006)
 		}
 	}
 	models.BatchRoleMenuAdd(model)
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }

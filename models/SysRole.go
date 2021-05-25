@@ -2,20 +2,20 @@ package models
 
 import (
 	"github.com/beego/beego/v2/client/orm"
+	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/dto"
-	"yixiang.co/yshop/untils"
 )
 
 type SysRole struct {
-	Id     int64      `json:"id"`
-	Name  string      `json:"name" valid:"Required;"`
-	Remark string     `json:"remark"`
-	DataScope string  `json:"dataScope"`
-	Level int32       `json:"level"`
-	Permission string `json:"permission"`
-	Users    []*SysUser  `orm:"reverse(many)"`
-	Menus []*SysMenu  `json:"menus" orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysRolesMenus)"`
-	Depts []*SysDept     `orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysRolesDepts)"`
+	Id     int64        `json:"id"`
+	Name  string        `json:"name" valid:"Required;"`
+	Remark string       `json:"remark"`
+	DataScope string    `json:"dataScope"`
+	Level int32         `json:"level"`
+	Permission string   `json:"permission"`
+	Users    []*SysUser `orm:"reverse(many)"`
+	Menus []*SysMenu    `json:"menus" orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysRolesMenus)"`
+	Depts []*SysDept    `orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysRolesDepts)"`
 	BaseModel
 }
 
@@ -23,7 +23,7 @@ func init() {
 	orm.RegisterModel(new(SysRole))
 }
 
-func GetOneRole(id int64) SysRole  {
+func GetOneRole(id int64) SysRole {
 	o := orm.NewOrm()
 	role := SysRole{Id: id}
 	o.Read(&role)

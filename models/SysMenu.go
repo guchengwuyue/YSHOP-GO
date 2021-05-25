@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/beego/beego/v2/core/logs"
-	"yixiang.co/yshop/untils"
+	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/vo/menu"
 )
 
@@ -89,7 +89,7 @@ func FindByRouterAndMethod(url string, method string) (permission string) {
 	return menu.Permission
 }
 
-func BuildMenus(uid int64) []menu.MenuVo  {
+func BuildMenus(uid int64) []menu.MenuVo {
 	o := orm.NewOrm()
 	var lists orm.ParamsList
 	_, err := o.Raw("SELECT r.* FROM sys_role r, sys_users_roles u " +

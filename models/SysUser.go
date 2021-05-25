@@ -5,8 +5,8 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/beego/beego/v2/core/logs"
 	"strconv"
+	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/dto"
-	"yixiang.co/yshop/untils"
 )
 
 type SysUser struct {
@@ -21,9 +21,9 @@ type SysUser struct {
 	//JobId int32
 	NickName string      `json:"nickName"`
 	Sex string           `json:"sex"`
-	Roles []*SysRole        `json:"roles" orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysUsersRoles)"`
+	Roles []*SysRole     `json:"roles" orm:"rel(m2m);rel_through(yixiang.co/yshop/models.SysUsersRoles)"`
 	Jobs *SysJob         `json:"job" orm:"column(job_id);bigint;rel(one)""`
-	Depts *SysDept          `json:"dept" orm:"column(dept_id);bigint;rel(one)""`
+	Depts *SysDept       `json:"dept" orm:"column(dept_id);bigint;rel(one)""`
 	Permissions []string `orm:"-"`
 	RoleIds []int64      `json:"roleIds" orm:"-"`
 	BaseModel

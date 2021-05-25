@@ -28,8 +28,7 @@ func (c *DeptController) GetAll() {
 	name := c.GetString("name")
 	enabled, _ := c.GetInt8("enabled",-1)
 	list := models.GetAllDepts(name,enabled)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: 0})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: list,TotalElements: 0})
 }
 
 // @Title 添加部门
@@ -43,15 +42,14 @@ func (c *DeptController) Post()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddDept(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 修改部门
@@ -65,15 +63,14 @@ func (c *DeptController) Put()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByDept(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 删除部门
@@ -86,8 +83,7 @@ func (c *DeptController) Delete() {
 	logs.Info(ids)
 	e := models.DelByDept(ids)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }

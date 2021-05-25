@@ -3,16 +3,16 @@ package models
 import (
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/beego/beego/v2/core/logs"
-	"yixiang.co/yshop/untils"
+	"yixiang.co/yshop/common/untils"
 )
 
 type SysDept struct {
-	Id     int64 `json:"id"`
-	Name string `json:"name" valid:"Required;"`
-	Pid int64 `json:"pid"`
-	Enabled int8 `json:"enabled" valid:"Required;"`
+	Id     int64       `json:"id"`
+	Name string        `json:"name" valid:"Required;"`
+	Pid int64          `json:"pid"`
+	Enabled int8       `json:"enabled" valid:"Required;"`
 	Children []SysDept `orm:"-" json:"children"`
-	Label string  `orm:"-" json:"label"`
+	Label string       `orm:"-" json:"label"`
 	BaseModel
 }
 

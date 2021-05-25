@@ -7,11 +7,11 @@ import (
 	"github.com/mojocn/base64Captcha"
 	"image/color"
 	"time"
+	"yixiang.co/yshop/common/jwt"
+	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/dto"
-	"yixiang.co/yshop/jwt"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/untils"
 	"yixiang.co/yshop/vo"
 )
 
@@ -52,28 +52,26 @@ func (c *LoginController) Login() {
 		currentUser, e := models.GetUserByUsername(authUser.Username)
 		//校验验证码
 		if !store.Verify(authUser.Id, authUser.Code, true) {
-			c.Data["json"] = controllers.ErrMsg("验证码不对")
-			c.ServeJSON()
+			c.Fail("验证码不对",5001)
 		}
 		if e != nil {
-			c.Data["json"] = controllers.ErrMsg("用户不存在")
+			c.Fail("用户不存在",5002)
 		}
 		logs.Info("=======currentUser======")
 		logs.Info(currentUser)
 		if !untils.ComparePwd(currentUser.Password,[]byte(authUser.Password)) {
-			c.Data["json"] = controllers.ErrMsg("密码错误")
+			c.Fail("密码错误",5003)
 		}else{
 			token,_ := jwt.GenerateToken(currentUser,time.Hour*24*100)
 			var loginVO = new(vo.LoginVo)
 			loginVO.Token = token
 			loginVO.User = currentUser
-			c.Data["json"] = controllers.SuccessData(loginVO)
+			c.Ok(loginVO)
 		}
 	}else {
-		c.Data["json"] = controllers.ErrMsg(err.Error())
+		c.Fail(err.Error(),5004)
 	}
 
-	c.ServeJSON()
 }
 
 // @Title 获取用户信息
@@ -92,11 +90,10 @@ func (c *LoginController) Info() {
 func (c *LoginController) Logout() {
 	err := jwt.RemoveUser(c.Ctx.Input)
 	if err != nil {
-		c.Data["json"] = controllers.ErrMsg("退出失败")
+		c.Fail("退出失败",5005)
 	}else{
-		c.Data["json"] = controllers.SuccessData("退出成功")
+		c.Ok("退出成功")
 	}
-	c.ServeJSON()
 }
 
 // @Title 获取验证码

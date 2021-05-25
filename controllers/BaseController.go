@@ -36,6 +36,17 @@ type Result struct {
 	Status int       `json:"status"`
 }
 
+func (c *BaseController) Ok(data any)  {
+	c.Data["json"] = SuccessData(data)
+	c.ServeJSON()
+}
+
+func (c *BaseController) Fail(msg string,status int)  {
+	c.Data["json"] = ErrMsg(msg,status)
+	c.ServeJSON()
+}
+
+
 
 func ErrMsg(msg string,status ...int) Result {
 	var r Result
@@ -64,7 +75,7 @@ func ErrData(msg error,status ...int) Result {
 }
 
 func SuccessData(data any) Result {
-	var r  Result
+	var r Result
 
 	r.Status = 200
 	r.Msg = "ok"

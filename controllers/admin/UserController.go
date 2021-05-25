@@ -5,11 +5,11 @@ import (
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/beego/beego/v2/core/validation"
 	beego "github.com/beego/beego/v2/server/web"
+	"yixiang.co/yshop/common/jwt"
+	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/dto"
-	"yixiang.co/yshop/jwt"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/untils"
 	"yixiang.co/yshop/vo"
 )
 
@@ -33,8 +33,7 @@ func (c *UserController) GetAll() {
 	deptId, _ := c.GetInt64("deptId",-1)
 	enabled, _ := c.GetInt64("enabled",-1)
 	total,list := models.GetAllUser(c.GetParams(),deptId,enabled)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: total})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: list,TotalElements: total})
 }
 
 // @Title 用户添加
@@ -48,15 +47,14 @@ func (c *UserController) Post()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddUser(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 用户编辑
@@ -72,15 +70,14 @@ func (c *UserController) Put()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByUser(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 用户删除
@@ -92,10 +89,9 @@ func (c *UserController) Delete() {
 	json.Unmarshal(c.Ctx.Input.RequestBody, &ids)
 	e := models.DelByUser(ids)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 用户上传图像
@@ -119,13 +115,12 @@ func (c *UserController) Avatar()  {
 	uid, _ := jwt.GetAdminUserId(c.Ctx.Input)
 	user, _ := models.GetUserById(uid)
 	if user == nil {
-		c.Data["json"] = controllers.ErrMsg("非法操作")
+		c.Fail("非法操作",5006)
 	}else {
 		user.Avatar = avatarUrl
 		models.UpdateCurrentUser(user)
-		c.Data["json"] = controllers.SuccessData("ok")
+		c.Ok("操作成功")
 	}
-	c.ServeJSON()
 }
 
 // @Title 用户修改密码
@@ -139,24 +134,22 @@ func (c *UserController) Pass()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5007)
 		}
 	}
 	//save user
 	uid, _ := jwt.GetAdminUserId(c.Ctx.Input)
 	user, _ := models.GetUserById(uid)
 	if user == nil {
-		c.Data["json"] = controllers.ErrMsg("非法操作")
+		c.Fail("非法操作",5008)
 	}else {
 		if !untils.ComparePwd(user.Password,[]byte(model.OldPass)) {
-			c.Data["json"] = controllers.ErrMsg("旧密码错误密码错误")
-			c.ServeJSON()
+			c.Fail("旧密码错误密码错误",5009)
 		}
 		user.Password = untils.HashAndSalt([]byte(model.NewPass))
 		models.UpdateCurrentUser(user)
-		c.Data["json"] = controllers.SuccessData("ok")
+		c.Ok("ok")
 	}
-	c.ServeJSON()
 }
 
 // @Title 用户修改个人信息
@@ -170,21 +163,19 @@ func (c *UserController) Center()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,50010)
 		}
-		c.ServeJSON()
 	}
 	//save user
 	uid, _ := jwt.GetAdminUserId(c.Ctx.Input)
 	user, _ := models.GetUserById(uid)
 	if user == nil {
-		c.Data["json"] = controllers.ErrMsg("非法操作")
+		c.Fail("非法操作",50011)
 	}else {
 		user.Phone = model.Phone
 		user.Sex = model.Sex
 		user.NickName = model.NickName
 		models.UpdateCurrentUser(user)
-		c.Data["json"] = controllers.SuccessData("ok")
+		c.Ok("ok")
 	}
-	c.ServeJSON()
 }

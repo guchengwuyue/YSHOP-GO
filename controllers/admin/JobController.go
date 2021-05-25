@@ -28,8 +28,7 @@ func (c *JobController) URLMapping() {
 func (c *JobController) GetAll() {
 	enabled, _ := c.GetInt64("enabled",-1)
 	total,list := models.GetAllJob(c.GetParams(),enabled)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: total})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: list,TotalElements: total})
 }
 
 // @Title 岗位添加
@@ -43,15 +42,14 @@ func (c *JobController) Post()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddJob(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 岗位修改
@@ -65,15 +63,14 @@ func (c *JobController) Put()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByJob(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 岗位删除
@@ -86,8 +83,7 @@ func (c *JobController) Delete() {
 	logs.Info(ids)
 	e := models.DelByJob(ids)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }

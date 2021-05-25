@@ -29,8 +29,7 @@ func (c *DictDetailController) GetAll() {
 	dictId, _ := c.GetInt64("dictId")
 	dictName := c.GetString("dictName")
 	total, list := models.GetAllDictDetail(c.GetParams(), dictId, dictName)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list, TotalElements: total})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: list,TotalElements: total})
 }
 
 // @Title 添加字典详情
@@ -45,15 +44,14 @@ func (c *DictDetailController) Post() {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddDictDetail(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 修改字典详情
@@ -67,15 +65,14 @@ func (c *DictDetailController) Put() {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByDictDetail(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 删除字典详情
@@ -86,8 +83,7 @@ func (c *DictDetailController) Delete() {
 	id, _ := c.GetInt64(":id", 1)
 	e := models.DelByDictDetail(id)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }

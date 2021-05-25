@@ -8,7 +8,7 @@ import (
 type SysRolesMenus struct {
 	Id int64
 	MenuId *SysMenu `orm:"column(menu_id);rel(fk)"`
-	RoleId *SysRole    `orm:"column(role_id);rel(fk)"`
+	RoleId *SysRole `orm:"column(role_id);rel(fk)"`
 }
 
 func init() {
@@ -22,8 +22,8 @@ func BatchRoleMenuAdd(menu dto.RoleMenu)  {
 	var roleMenus []SysRolesMenus
 	for _, val := range menu.Menus {
 		var menus = SysMenu{Id: val.Id}
-		var roles = SysRole{Id:menu.Id}
-		roleMenus = append(roleMenus,SysRolesMenus{MenuId: &menus,RoleId: &roles})
+		var roles = SysRole{Id: menu.Id}
+		roleMenus = append(roleMenus, SysRolesMenus{MenuId: &menus,RoleId: &roles})
 	}
 
 	o.InsertMulti(100,roleMenus)

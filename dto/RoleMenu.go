@@ -1,7 +1,7 @@
 package dto
 
 type RoleMenu struct {
-	Id int64 `json:"id"`
+	Id int64     `json:"id"`
 	Menus []Menu `json:"menus" valid:"Required;"`
 }
 

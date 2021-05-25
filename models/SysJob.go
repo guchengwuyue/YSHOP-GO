@@ -3,8 +3,8 @@ package models
 import (
 	"github.com/beego/beego/v2/client/orm"
 	"strconv"
+	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/dto"
-	"yixiang.co/yshop/untils"
 )
 
 type SysJob struct {

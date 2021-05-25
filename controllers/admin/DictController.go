@@ -27,8 +27,7 @@ func (c *DictController) URLMapping() {
 // @router / [get]
 func (c *DictController) GetAll() {
 	total,list := models.GetAllDict(c.GetParams())
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: list,TotalElements: total})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: list,TotalElements: total})
 }
 
 // @Title 添加字典
@@ -42,15 +41,14 @@ func (c *DictController) Post()  {
 	b, _ := valid.Valid(&dictModel)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddDict(&dictModel)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 修改字典
@@ -64,15 +62,14 @@ func (c *DictController) Put()  {
 	b, _ := valid.Valid(&dictModel)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByDict(&dictModel)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 删除字典
@@ -83,8 +80,7 @@ func (c *DictController) Delete() {
 	id, _ := c.GetInt64(":id",1)
 	e := models.DelByDict(id)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }

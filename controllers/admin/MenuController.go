@@ -3,8 +3,8 @@ package admin
 import (
 	"encoding/json"
 	"github.com/beego/beego/v2/core/validation"
+	"yixiang.co/yshop/common/jwt"
 	"yixiang.co/yshop/controllers"
-	"yixiang.co/yshop/jwt"
 	"yixiang.co/yshop/models"
 	"yixiang.co/yshop/vo"
 )
@@ -29,8 +29,7 @@ func (c *MenuController) URLMapping() {
 func (c *MenuController) GetAll() {
 	name := c.GetString("blurry")
 	menus := models.GetAllMenus(name)
-	c.Data["json"] = controllers.SuccessData(vo.ResultList{Content: menus,TotalElements: 0})
-	c.ServeJSON()
+	c.Ok(vo.ResultList{Content: menus,TotalElements: 0})
 }
 
 // @Title 菜单添加
@@ -44,15 +43,14 @@ func (c *MenuController) Post()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5001)
 		}
 	}
 	_, e := models.AddMenu(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5002)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 菜单修改
@@ -66,15 +64,14 @@ func (c *MenuController) Put()  {
 	b, _ := valid.Valid(&model)
 	if !b {
 		for _, err := range valid.Errors {
-			c.Data["json"] = controllers.ErrMsg(err.Message)
+			c.Fail(err.Message,5003)
 		}
 	}
 	e := models.UpdateByMenu(&model)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5004)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 菜单删除
@@ -86,10 +83,9 @@ func (c *MenuController) Delete() {
 	json.Unmarshal(c.Ctx.Input.RequestBody, &ids)
 	e := models.DelByMenu(ids)
 	if e != nil {
-		c.Data["json"] = controllers.ErrMsg(e.Error())
+		c.Fail(e.Error(),5005)
 	}
-	c.Data["json"] = controllers.SuccessData("操作成功")
-	c.ServeJSON()
+	c.Ok("操作成功")
 }
 
 // @Title 菜单构建
@@ -99,8 +95,7 @@ func (c *MenuController) Delete() {
 func (c *MenuController) Build() {
 	uid, _:= jwt.GetAdminUserId(c.Ctx.Input)
 	menus := models.BuildMenus(uid)
-	c.Data["json"] = controllers.SuccessData(menus)
-	c.ServeJSON()
+	c.Ok(menus)
 }
 
 // @Title 菜单树形
@@ -109,8 +104,7 @@ func (c *MenuController) Build() {
 // @router /tree [get]
 func (c *MenuController) GetTree() {
 	menus := models.GetAllMenus("")
-	c.Data["json"] = controllers.SuccessData(menus)
-	c.ServeJSON()
+	c.Ok(menus)
 }
 
 

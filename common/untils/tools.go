@@ -2,6 +2,7 @@ package untils
 
 import (
 	"fmt"
+	"github.com/beego/beego/v2/core/logs"
 	"golang.org/x/crypto/bcrypt"
 	"reflect"
 	"strings"
@@ -19,9 +20,11 @@ func HashAndSalt(pwd []byte) string {
 
 //密码验证
 func ComparePwd(hashPwd string,plainPwd []byte) bool {
+	logs.Info(hashPwd)
 	byteHash := []byte(hashPwd)
 	err := bcrypt.CompareHashAndPassword(byteHash,plainPwd)
 	if err != nil {
+		logs.Error(err.Error())
 		return false
 	}
 

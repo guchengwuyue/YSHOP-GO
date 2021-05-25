@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 	"yixiang.co/yshop/common"
+	"yixiang.co/yshop/common/redis"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/redis"
 	"yixiang.co/yshop/vo"
 )
 
