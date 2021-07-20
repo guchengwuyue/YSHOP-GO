@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/beego/beego/v2/client/orm"
-	"yixiang.co/yshop/dto"
+	"yixiang.co/yshop/models/dto"
 )
 
 type SysRolesMenus struct {

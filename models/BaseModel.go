@@ -37,7 +37,7 @@ func GetPagesInfo(tableName string, currentpage int, pagesize int, conditions st
 		}
 		totalpages = temp
 	}
-	rs = o.Raw("select *  from  " + tableName + "  where is_del=0 " + conditions +
+	rs = o.Raw("select *  from  " + tableName + "  where is_del=0 " + conditions +  " order by id desc " +
 		" LIMIT " + strconv.Itoa((currentpage-1)*pagesize) + "," + strconv.Itoa(pagesize))
 	return totalItem, totalpages, rs
 }

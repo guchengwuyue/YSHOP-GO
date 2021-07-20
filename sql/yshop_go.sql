@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 27/04/2021 16:53:40
+ Date: 20/07/2021 14:29:55
 */
 
 SET NAMES utf8mb4;
@@ -30,22 +30,23 @@ CREATE TABLE `sys_dept` (
   `update_time` datetime DEFAULT NULL,
   `is_del` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='部门';
 
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
 BEGIN;
 INSERT INTO `sys_dept` VALUES (1, 'YSHOP', 0, 1, '2021-02-26 14:51:14', NULL, 0);
-INSERT INTO `sys_dept` VALUES (2, '研发部', 7, 1, '2019-03-25 09:15:32', NULL, 0);
+INSERT INTO `sys_dept` VALUES (2, '研发部', 7, 1, '2021-07-19 17:24:03', NULL, 0);
 INSERT INTO `sys_dept` VALUES (5, '运维部', 7, 1, '2019-03-25 09:20:44', NULL, 0);
-INSERT INTO `sys_dept` VALUES (6, '测试部', 8, 0, '2021-02-25 16:22:53', NULL, 0);
+INSERT INTO `sys_dept` VALUES (6, '测试部', 8, 1, '2021-05-25 14:44:39', NULL, 0);
 INSERT INTO `sys_dept` VALUES (7, '华南分部', 1, 1, '2019-03-25 11:04:50', NULL, 0);
 INSERT INTO `sys_dept` VALUES (8, '华北分部', 1, 1, '2019-03-25 11:04:53', NULL, 0);
 INSERT INTO `sys_dept` VALUES (11, '人事部', 8, 1, '2019-03-25 11:07:58', NULL, 0);
 INSERT INTO `sys_dept` VALUES (12, '7773888', 1, 1, '2021-02-26 15:04:43', NULL, 1);
 INSERT INTO `sys_dept` VALUES (13, '333', 1, 0, '2021-02-26 14:28:26', '2021-02-26 14:28:26', 1);
 INSERT INTO `sys_dept` VALUES (14, '9922', 13, 1, '2021-02-26 15:05:05', '2021-02-26 14:29:17', 1);
+INSERT INTO `sys_dept` VALUES (15, '44', 1, 1, '2021-05-25 14:42:26', '2021-05-25 14:42:26', 1);
 COMMIT;
 
 -- ----------------------------
@@ -60,7 +61,7 @@ CREATE TABLE `sys_dict` (
   `update_time` datetime DEFAULT NULL,
   `is_del` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='数据字典';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='数据字典';
 
 -- ----------------------------
 -- Records of sys_dict
@@ -74,6 +75,11 @@ INSERT INTO `sys_dict` VALUES (16, 'force_update', '强制升级', '2020-12-09 1
 INSERT INTO `sys_dict` VALUES (17, 'is_enable', '是否启用', '2020-12-10 12:02:57', NULL, 0);
 INSERT INTO `sys_dict` VALUES (18, 'sex2', '性别', '2021-02-23 15:20:40', '2021-02-23 14:12:04', 0);
 INSERT INTO `sys_dict` VALUES (19, 'sex4', '性别', '2021-02-23 15:20:20', '2021-02-23 14:14:29', 0);
+INSERT INTO `sys_dict` VALUES (20, '4', '', '2021-07-19 17:22:47', '2021-05-25 14:48:05', 0);
+INSERT INTO `sys_dict` VALUES (21, '6', '', '2021-07-19 16:25:15', '2021-07-19 16:25:15', 0);
+INSERT INTO `sys_dict` VALUES (22, '7', '', '2021-07-19 16:26:43', '2021-07-19 16:26:43', 0);
+INSERT INTO `sys_dict` VALUES (23, '7', '', '2021-07-19 16:44:01', '2021-07-19 16:44:01', 0);
+INSERT INTO `sys_dict` VALUES (24, '7', '', '2021-07-19 17:22:40', '2021-07-19 17:22:40', 0);
 COMMIT;
 
 -- ----------------------------
@@ -133,12 +139,39 @@ CREATE TABLE `sys_job` (
 -- Records of sys_job
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_job` VALUES (8, '人事专员', 1, 3, 11, '2021-03-07 10:15:49', NULL, 0);
+INSERT INTO `sys_job` VALUES (8, '人事专员', 1, 3, 11, '2021-05-10 14:41:48', NULL, 0);
 INSERT INTO `sys_job` VALUES (10, '产品经理', 1, 4, 2, '2019-03-29 14:55:51', NULL, 0);
 INSERT INTO `sys_job` VALUES (11, '全栈开发2', 1, 2, 2, '2019-03-31 13:39:30', NULL, 0);
 INSERT INTO `sys_job` VALUES (12, '软件测试', 1, 5, 2, '2019-03-31 13:39:43', NULL, 0);
 INSERT INTO `sys_job` VALUES (13, '6665', 1, 0, 1, '2021-03-02 15:45:16', '2021-03-02 15:42:55', 1);
 INSERT INTO `sys_job` VALUES (14, '99', 1, 0, 5, '2021-03-02 15:44:05', '2021-03-02 15:44:05', 1);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log`;
+CREATE TABLE `sys_log` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `request_ip` varchar(255) DEFAULT NULL,
+  `time` bigint DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `browser` varchar(255) DEFAULT NULL,
+  `type` int DEFAULT '0',
+  `uid` bigint DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `is_del` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统日志';
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 -- ----------------------------
@@ -166,14 +199,14 @@ CREATE TABLE `sys_menu` (
   `router_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '路由动作',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `FKqcf9gem97gqa5qjm4d3elcqt5` (`pid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=279 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu` VALUES (1, 0, '系统管理', NULL, 0, 99, 'system', 'system', 0, 0, NULL, '2018-12-18 15:11:29', NULL, 1, '2020-07-16 20:05:34', 0, NULL, NULL);
-INSERT INTO `sys_menu` VALUES (2, 0, '用户管理', 'system/user/index', 1, 2, 'peoples', 'user', 0, 0, 'User', '2021-03-06 10:24:34', 'user:list', 1, NULL, 0, '/admin/user', 'get');
+INSERT INTO `sys_menu` VALUES (1, 0, '系统管理', '', 0, 99, 'system', 'system', 0, 0, '', '2021-07-14 14:37:04', '', 1, '2020-07-16 20:05:34', 0, '', '');
+INSERT INTO `sys_menu` VALUES (2, 0, '用户管理', 'system/user/index', 1, 2, 'peoples', 'user', 0, 0, 'User', '2021-05-25 14:56:42', 'user:list', 1, NULL, 0, '/admin/user', 'get');
 INSERT INTO `sys_menu` VALUES (3, 0, '角色管理', 'system/role/index', 1, 3, 'role', 'role', 0, 0, 'Role', '2021-03-06 10:31:55', 'roles:list', 1, NULL, 0, '/admin/roles', 'get');
 INSERT INTO `sys_menu` VALUES (5, 0, '菜单管理', 'system/menu/index', 1, 5, 'menu', 'menu', 0, 0, 'Menu', '2021-03-06 10:33:17', 'menu:list', 1, NULL, 0, '/admin/menu', 'get');
 INSERT INTO `sys_menu` VALUES (35, 0, '部门管理', 'system/dept/index', 1, 6, 'dept', 'dept', 0, 0, 'Dept', '2021-03-06 10:34:35', 'dept:list', 1, NULL, 0, '/admin/dept', 'get');
@@ -214,6 +247,7 @@ INSERT INTO `sys_menu` VALUES (275, 0, '单个角色', '', 3, 999, '', '', 0, 0,
 INSERT INTO `sys_menu` VALUES (276, 0, '用户个人信息', '', 2, 999, '', '', 0, 0, '', '2021-03-06 10:36:41', 'user:info', 2, '2021-03-06 11:20:25', 0, '/admin/auth/info', 'get');
 INSERT INTO `sys_menu` VALUES (277, 0, '用户头像', '', 2, 999, '', '', 0, 0, '', '2021-03-06 10:36:41', 'user:avatar', 2, '2021-03-06 11:21:41', 0, '/admin/user/updateAvatar', 'post');
 INSERT INTO `sys_menu` VALUES (278, 0, '用户退出', '', 2, 999, '', '', 0, 0, '', '2021-03-06 11:25:00', 'user:logout', 2, '2021-03-06 11:25:00', 0, '/admin/auth/logout', 'delete');
+INSERT INTO `sys_menu` VALUES (279, 0, '操作日志', 'system/log/index', 1, 999, 'log', 'log', 0, 0, 'Log', '2021-07-14 15:13:49', 'log:list', 1, '2021-07-14 14:45:05', 0, '/admin/logs', 'get');
 COMMIT;
 
 -- ----------------------------
@@ -237,8 +271,8 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role` VALUES (1, '超级管理员', '-', '全部', 1, '2018-11-23 11:04:37', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (2, '普通用户', '-555', '本级', 2, '2021-03-07 10:09:08', 'common', NULL, 0);
+INSERT INTO `sys_role` VALUES (1, '超级管理员', '-', '全部', 1, '2021-05-25 15:06:39', 'admin', NULL, 0);
+INSERT INTO `sys_role` VALUES (2, '普通用户', '-555', '本级', 2, '2021-07-14 14:12:26', 'common', NULL, 0);
 INSERT INTO `sys_role` VALUES (3, '管理员2', '222', '全部', 3, '2020-01-31 16:53:25', '22', NULL, 0);
 INSERT INTO `sys_role` VALUES (4, '667', '66', '全部', 3, '2021-03-02 16:16:43', '666', '2021-03-02 16:15:20', 1);
 INSERT INTO `sys_role` VALUES (5, '99', '9', '全部', 3, '2021-03-02 16:16:35', '9', '2021-03-02 16:16:35', 1);
@@ -272,60 +306,12 @@ CREATE TABLE `sys_roles_menus` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   KEY `FKcngg2qadojhi3a651a5adkvbq` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=503 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色菜单关联';
+) ENGINE=InnoDB AUTO_INCREMENT=564 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色菜单关联';
 
 -- ----------------------------
 -- Records of sys_roles_menus
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_roles_menus` VALUES (1, 1, 411);
-INSERT INTO `sys_roles_menus` VALUES (2, 1, 412);
-INSERT INTO `sys_roles_menus` VALUES (127, 1, 413);
-INSERT INTO `sys_roles_menus` VALUES (128, 1, 414);
-INSERT INTO `sys_roles_menus` VALUES (129, 1, 415);
-INSERT INTO `sys_roles_menus` VALUES (276, 1, 416);
-INSERT INTO `sys_roles_menus` VALUES (277, 1, 417);
-INSERT INTO `sys_roles_menus` VALUES (278, 1, 418);
-INSERT INTO `sys_roles_menus` VALUES (3, 1, 419);
-INSERT INTO `sys_roles_menus` VALUES (130, 1, 420);
-INSERT INTO `sys_roles_menus` VALUES (131, 1, 421);
-INSERT INTO `sys_roles_menus` VALUES (132, 1, 422);
-INSERT INTO `sys_roles_menus` VALUES (273, 1, 423);
-INSERT INTO `sys_roles_menus` VALUES (274, 1, 424);
-INSERT INTO `sys_roles_menus` VALUES (275, 1, 425);
-INSERT INTO `sys_roles_menus` VALUES (5, 1, 426);
-INSERT INTO `sys_roles_menus` VALUES (133, 1, 427);
-INSERT INTO `sys_roles_menus` VALUES (134, 1, 428);
-INSERT INTO `sys_roles_menus` VALUES (135, 1, 429);
-INSERT INTO `sys_roles_menus` VALUES (35, 1, 430);
-INSERT INTO `sys_roles_menus` VALUES (136, 1, 431);
-INSERT INTO `sys_roles_menus` VALUES (137, 1, 432);
-INSERT INTO `sys_roles_menus` VALUES (138, 1, 433);
-INSERT INTO `sys_roles_menus` VALUES (37, 1, 434);
-INSERT INTO `sys_roles_menus` VALUES (139, 1, 435);
-INSERT INTO `sys_roles_menus` VALUES (140, 1, 436);
-INSERT INTO `sys_roles_menus` VALUES (141, 1, 437);
-INSERT INTO `sys_roles_menus` VALUES (39, 1, 438);
-INSERT INTO `sys_roles_menus` VALUES (142, 1, 439);
-INSERT INTO `sys_roles_menus` VALUES (143, 1, 440);
-INSERT INTO `sys_roles_menus` VALUES (144, 1, 441);
-INSERT INTO `sys_roles_menus` VALUES (269, 1, 442);
-INSERT INTO `sys_roles_menus` VALUES (270, 1, 443);
-INSERT INTO `sys_roles_menus` VALUES (271, 1, 444);
-INSERT INTO `sys_roles_menus` VALUES (272, 1, 445);
-INSERT INTO `sys_roles_menus` VALUES (36, 1, 446);
-INSERT INTO `sys_roles_menus` VALUES (123, 1, 447);
-INSERT INTO `sys_roles_menus` VALUES (1, 2, 461);
-INSERT INTO `sys_roles_menus` VALUES (35, 2, 462);
-INSERT INTO `sys_roles_menus` VALUES (37, 2, 463);
-INSERT INTO `sys_roles_menus` VALUES (136, 2, 464);
-INSERT INTO `sys_roles_menus` VALUES (137, 2, 465);
-INSERT INTO `sys_roles_menus` VALUES (139, 2, 466);
-INSERT INTO `sys_roles_menus` VALUES (140, 2, 467);
-INSERT INTO `sys_roles_menus` VALUES (269, 2, 468);
-INSERT INTO `sys_roles_menus` VALUES (270, 2, 469);
-INSERT INTO `sys_roles_menus` VALUES (271, 2, 470);
-INSERT INTO `sys_roles_menus` VALUES (272, 2, 471);
 INSERT INTO `sys_roles_menus` VALUES (1, 3, 472);
 INSERT INTO `sys_roles_menus` VALUES (2, 3, 473);
 INSERT INTO `sys_roles_menus` VALUES (127, 3, 474);
@@ -357,6 +343,55 @@ INSERT INTO `sys_roles_menus` VALUES (39, 3, 499);
 INSERT INTO `sys_roles_menus` VALUES (142, 3, 500);
 INSERT INTO `sys_roles_menus` VALUES (143, 3, 501);
 INSERT INTO `sys_roles_menus` VALUES (144, 3, 502);
+INSERT INTO `sys_roles_menus` VALUES (1, 2, 515);
+INSERT INTO `sys_roles_menus` VALUES (35, 2, 516);
+INSERT INTO `sys_roles_menus` VALUES (136, 2, 517);
+INSERT INTO `sys_roles_menus` VALUES (37, 2, 518);
+INSERT INTO `sys_roles_menus` VALUES (139, 2, 519);
+INSERT INTO `sys_roles_menus` VALUES (140, 2, 520);
+INSERT INTO `sys_roles_menus` VALUES (141, 2, 521);
+INSERT INTO `sys_roles_menus` VALUES (269, 2, 522);
+INSERT INTO `sys_roles_menus` VALUES (270, 2, 523);
+INSERT INTO `sys_roles_menus` VALUES (271, 2, 524);
+INSERT INTO `sys_roles_menus` VALUES (272, 2, 525);
+INSERT INTO `sys_roles_menus` VALUES (1, 1, 526);
+INSERT INTO `sys_roles_menus` VALUES (2, 1, 527);
+INSERT INTO `sys_roles_menus` VALUES (127, 1, 528);
+INSERT INTO `sys_roles_menus` VALUES (128, 1, 529);
+INSERT INTO `sys_roles_menus` VALUES (129, 1, 530);
+INSERT INTO `sys_roles_menus` VALUES (276, 1, 531);
+INSERT INTO `sys_roles_menus` VALUES (277, 1, 532);
+INSERT INTO `sys_roles_menus` VALUES (278, 1, 533);
+INSERT INTO `sys_roles_menus` VALUES (3, 1, 534);
+INSERT INTO `sys_roles_menus` VALUES (130, 1, 535);
+INSERT INTO `sys_roles_menus` VALUES (131, 1, 536);
+INSERT INTO `sys_roles_menus` VALUES (132, 1, 537);
+INSERT INTO `sys_roles_menus` VALUES (273, 1, 538);
+INSERT INTO `sys_roles_menus` VALUES (274, 1, 539);
+INSERT INTO `sys_roles_menus` VALUES (275, 1, 540);
+INSERT INTO `sys_roles_menus` VALUES (5, 1, 541);
+INSERT INTO `sys_roles_menus` VALUES (133, 1, 542);
+INSERT INTO `sys_roles_menus` VALUES (134, 1, 543);
+INSERT INTO `sys_roles_menus` VALUES (135, 1, 544);
+INSERT INTO `sys_roles_menus` VALUES (35, 1, 545);
+INSERT INTO `sys_roles_menus` VALUES (136, 1, 546);
+INSERT INTO `sys_roles_menus` VALUES (137, 1, 547);
+INSERT INTO `sys_roles_menus` VALUES (138, 1, 548);
+INSERT INTO `sys_roles_menus` VALUES (37, 1, 549);
+INSERT INTO `sys_roles_menus` VALUES (139, 1, 550);
+INSERT INTO `sys_roles_menus` VALUES (140, 1, 551);
+INSERT INTO `sys_roles_menus` VALUES (141, 1, 552);
+INSERT INTO `sys_roles_menus` VALUES (39, 1, 553);
+INSERT INTO `sys_roles_menus` VALUES (142, 1, 554);
+INSERT INTO `sys_roles_menus` VALUES (143, 1, 555);
+INSERT INTO `sys_roles_menus` VALUES (144, 1, 556);
+INSERT INTO `sys_roles_menus` VALUES (269, 1, 557);
+INSERT INTO `sys_roles_menus` VALUES (270, 1, 558);
+INSERT INTO `sys_roles_menus` VALUES (271, 1, 559);
+INSERT INTO `sys_roles_menus` VALUES (272, 1, 560);
+INSERT INTO `sys_roles_menus` VALUES (279, 1, 561);
+INSERT INTO `sys_roles_menus` VALUES (36, 1, 562);
+INSERT INTO `sys_roles_menus` VALUES (123, 1, 563);
 COMMIT;
 
 -- ----------------------------
@@ -385,13 +420,13 @@ CREATE TABLE `sys_user` (
   KEY `FKpq2dhypk2qgt68nauh2by22jb` (`avatar`) USING BTREE,
   CONSTRAINT `FK5rwmryny6jthaaxkogownknqp` FOREIGN KEY (`dept_id`) REFERENCES `sys_dept` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKfftoc2abhot8f2wu6cl9a5iky` FOREIGN KEY (`job_id`) REFERENCES `sys_job` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=9998 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统用户';
+) ENGINE=InnoDB AUTO_INCREMENT=9999 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='系统用户';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES (1, 'https://goapi.yixiang.co/static/upload/1.jpg', 'yshop@qq.com', 1, '$2a$10$fP.426qKaTmix50Oln8L.uav55gELhAd0Eg66Av4oG86u8km7D/Ky', 'admin', 2, '18888888888', 11, '2021-03-07 10:08:30', '管理员', '男', '2020-06-27 12:05:56', 0);
+INSERT INTO `sys_user` VALUES (1, 'https://goapi.yixiang.co/static/upload/1.jpg', 'yshop@qq.com', 1, '$2a$10$fP.426qKaTmix50Oln8L.uav55gELhAd0Eg66Av4oG86u8km7D/Ky', 'admin', 2, '18888888888', 11, '2021-05-25 15:06:52', '管理员', '男', '2020-06-27 12:05:56', 0);
 INSERT INTO `sys_user` VALUES (3, '', 'test@yshopnet', 1, '$2a$04$tw0sZ2EOqt7y.tkrnWHdgeyTG6ku7iv0vAACBTBwym5lNr2oQkG.y', 'test', 2, '17777777777', 12, '2021-03-06 12:46:08', '测试2', '男', NULL, 0);
 INSERT INTO `sys_user` VALUES (4, NULL, 'test2@qq.com', 1, '$2a$10$IjehtV8MiXb8ni.Qz0wBteE7FjVn49cEcsSj2.ZBUqqHjnC3umSh.', 'test2', 2, '15136175247', 11, '2020-02-15 20:39:16', 'test2', '男', NULL, 0);
 INSERT INTO `sys_user` VALUES (5, '', '444@qq.com', 1, '$2a$10$f/VH35NBOBszycV9KEA1HenQ0qVjazDm8LacQU9PO.A4UizFxLMuq', 'qqqqq', 11, '15136175249', 8, '2021-03-04 16:22:56', 'eeeeee', '男', NULL, 1);
@@ -399,6 +434,7 @@ INSERT INTO `sys_user` VALUES (6, '', '666@qq.com', 0, '$2a$10$3Vlo24eOmHHW7.3vA
 INSERT INTO `sys_user` VALUES (9992, '', '66@qq.com', 1, '$2a$04$zI7VSH/WspYF9Kea1lCMkO/0pMh.d0U72EO6T0YinOxs.d97dTImi', 'hupeng33333', 7, '18888888888', 8, '2021-03-05 10:42:42', 'hu', '男', '2021-03-04 15:07:36', 1);
 INSERT INTO `sys_user` VALUES (9993, '', '44@qq.com', 1, '$2a$04$IBgD8Un9Xgbi0lzbklZlC.uK1srn5w1Y5ntN1qfpzDgcipLLRp1aG', 'hupeng2', 11, '', 10, '2021-03-04 15:28:40', 'hu2', '男', '2021-03-04 15:09:11', 1);
 INSERT INTO `sys_user` VALUES (9996, '', '777@qq.com', 0, '$2a$04$Ep/UAK2kmJKPto6efG9qyOYlwQ5NGL0T/PkLVrUcXJxTcq6WG5Zca', 'zhang', 5, '18888888888', 11, '2021-03-04 16:23:49', 'zhang', '男', '2021-03-04 16:14:59', 1);
+INSERT INTO `sys_user` VALUES (9998, '', 'hu@qq.com', 1, '$2a$04$RWLjxYCIDjVweW5kKcg/B.uYvXdlaZT1NWkCJEj3EanhuB4ou4sZe', 'hupeng', 2, '15136175233', 8, '2021-05-10 14:41:11', 'hupeng', '男', '2021-05-10 14:41:11', 0);
 COMMIT;
 
 -- ----------------------------
@@ -410,7 +446,7 @@ CREATE TABLE `sys_users_roles` (
   `role_id` bigint NOT NULL COMMENT '角色ID',
   `id` bigint NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户角色关联';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户角色关联';
 
 -- ----------------------------
 -- Records of sys_users_roles
@@ -419,6 +455,7 @@ BEGIN;
 INSERT INTO `sys_users_roles` VALUES (1, 1, 1);
 INSERT INTO `sys_users_roles` VALUES (3, 2, 2);
 INSERT INTO `sys_users_roles` VALUES (4, 2, 3);
+INSERT INTO `sys_users_roles` VALUES (9998, 2, 35);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

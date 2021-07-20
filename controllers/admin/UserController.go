@@ -8,9 +8,9 @@ import (
 	"yixiang.co/yshop/common/jwt"
 	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/controllers"
-	"yixiang.co/yshop/dto"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/dto"
+	"yixiang.co/yshop/models/vo"
 )
 
 // 用户 API
@@ -42,14 +42,8 @@ func (c *UserController) GetAll() {
 // @router / [post]
 func (c *UserController) Post()  {
 	var model models.SysUser
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5001)
-		}
-	}
+	c.Valid(&model)
 	_, e := models.AddUser(&model)
 	if e != nil {
 		c.Fail(e.Error(),5002)
@@ -63,16 +57,10 @@ func (c *UserController) Post()  {
 // @router / [put]
 func (c *UserController) Put()  {
 	var model models.SysUser
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
 	logs.Info("======start======")
 	logs.Info(model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5003)
-		}
-	}
+	c.Valid(&model)
 	e := models.UpdateByUser(&model)
 	if e != nil {
 		c.Fail(e.Error(),5004)

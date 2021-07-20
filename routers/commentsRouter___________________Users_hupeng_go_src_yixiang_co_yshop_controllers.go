@@ -151,24 +151,6 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["yixiang.co/yshop/controllers/admin:LogController"] = append(beego.GlobalControllerRouter["yixiang.co/yshop/controllers/admin:LogController"],
-        beego.ControllerComments{
-            Method: "GetAll",
-            Router: "/",
-            AllowHTTPMethods: []string{"get"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["yixiang.co/yshop/controllers/admin:LogController"] = append(beego.GlobalControllerRouter["yixiang.co/yshop/controllers/admin:LogController"],
-        beego.ControllerComments{
-            Method: "Delete",
-            Router: "/",
-            AllowHTTPMethods: []string{"delete"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
     beego.GlobalControllerRouter["yixiang.co/yshop/controllers/admin:LoginController"] = append(beego.GlobalControllerRouter["yixiang.co/yshop/controllers/admin:LoginController"],
         beego.ControllerComments{
             Method: "Captcha",

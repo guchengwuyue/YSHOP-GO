@@ -4,7 +4,7 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 	"strconv"
 	"yixiang.co/yshop/common/untils"
-	"yixiang.co/yshop/dto"
+	"yixiang.co/yshop/models/dto"
 )
 
 type SysJob struct {

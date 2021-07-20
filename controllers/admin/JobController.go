@@ -3,10 +3,9 @@ package admin
 import (
 	"encoding/json"
 	"github.com/beego/beego/v2/core/logs"
-	"github.com/beego/beego/v2/core/validation"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/vo"
 )
 
 // 岗位api
@@ -37,14 +36,8 @@ func (c *JobController) GetAll() {
 // @router / [post]
 func (c *JobController) Post()  {
 	var model models.SysJob
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5001)
-		}
-	}
+	c.Valid(&model)
 	_, e := models.AddJob(&model)
 	if e != nil {
 		c.Fail(e.Error(),5002)
@@ -58,14 +51,8 @@ func (c *JobController) Post()  {
 // @router / [put]
 func (c *JobController) Put()  {
 	var model models.SysJob
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5003)
-		}
-	}
+	c.Valid(&model)
 	e := models.UpdateByJob(&model)
 	if e != nil {
 		c.Fail(e.Error(),5004)

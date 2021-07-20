@@ -4,7 +4,7 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/beego/beego/v2/core/logs"
 	"yixiang.co/yshop/common/untils"
-	"yixiang.co/yshop/vo/menu"
+	"yixiang.co/yshop/models/vo/menu"
 )
 
 type SysMenu struct {
@@ -87,6 +87,13 @@ func FindByRouterAndMethod(url string, method string) (permission string) {
 		return ""
 	}
 	return menu.Permission
+}
+
+func FindMenuByRouterAndMethod(url string, method string) SysMenu {
+	o := orm.NewOrm()
+	var menu SysMenu
+    o.QueryTable(new(SysMenu)).Filter("router",url).Filter("router_method",method).One(&menu)
+	return menu
 }
 
 func BuildMenus(uid int64) []menu.MenuVo {

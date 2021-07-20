@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/beego/beego/v2/client/orm"
 	"github.com/beego/beego/v2/core/logs"
-	"yixiang.co/yshop/dto"
+	"yixiang.co/yshop/models/dto"
 )
 
 type SysDict struct {

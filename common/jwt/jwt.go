@@ -14,7 +14,7 @@ import (
 	"yixiang.co/yshop/common"
 	"yixiang.co/yshop/common/redis"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/vo"
 )
 
 type userStdClaims struct {

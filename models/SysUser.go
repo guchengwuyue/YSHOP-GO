@@ -6,7 +6,7 @@ import (
 	"github.com/beego/beego/v2/core/logs"
 	"strconv"
 	"yixiang.co/yshop/common/untils"
-	"yixiang.co/yshop/dto"
+	"yixiang.co/yshop/models/dto"
 )
 
 type SysUser struct {

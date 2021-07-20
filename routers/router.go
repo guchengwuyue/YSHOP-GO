@@ -61,6 +61,11 @@ func init() {
 				&admin.RoleController{},
 			),
 		),
+		beego.NSNamespace("/logs",
+			beego.NSInclude(
+				&admin.LogController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns1,ns2)
 

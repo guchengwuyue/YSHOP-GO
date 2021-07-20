@@ -2,11 +2,10 @@ package admin
 
 import (
 	"encoding/json"
-	"github.com/beego/beego/v2/core/validation"
 	"yixiang.co/yshop/common/jwt"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/vo"
 )
 
 // 菜单api
@@ -38,14 +37,8 @@ func (c *MenuController) GetAll() {
 // @router / [post]
 func (c *MenuController) Post()  {
 	var model models.SysMenu
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5001)
-		}
-	}
+	c.Valid(&model)
 	_, e := models.AddMenu(&model)
 	if e != nil {
 		c.Fail(e.Error(),5002)
@@ -59,14 +52,8 @@ func (c *MenuController) Post()  {
 // @router / [put]
 func (c *MenuController) Put()  {
 	var model models.SysMenu
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5003)
-		}
-	}
+	c.Valid(&model)
 	e := models.UpdateByMenu(&model)
 	if e != nil {
 		c.Fail(e.Error(),5004)

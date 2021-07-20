@@ -6,8 +6,9 @@
 package controllers
 
 import (
+	"github.com/beego/beego/v2/core/validation"
 	beego "github.com/beego/beego/v2/server/web"
-	"yixiang.co/yshop/dto"
+	"yixiang.co/yshop/models/dto"
 )
 
 
@@ -34,6 +35,16 @@ type Result struct {
 	Data interface{} `json:"data"`
 	Msg string       `json:"msg"`
 	Status int       `json:"status"`
+}
+
+func (c *BaseController) Valid(data any) {
+	valid := validation.Validation{}
+	b, _ := valid.Valid(data)
+	if !b {
+		for _, err := range valid.Errors {
+			c.Fail(err.Message,5001)
+		}
+	}
 }
 
 func (c *BaseController) Ok(data any)  {

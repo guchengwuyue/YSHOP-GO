@@ -6,9 +6,9 @@ import (
 	"github.com/beego/beego/v2/core/validation"
 	"strconv"
 	"yixiang.co/yshop/controllers"
-	"yixiang.co/yshop/dto"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/dto"
+	"yixiang.co/yshop/models/vo"
 )
 
 // 角色 API
@@ -49,14 +49,8 @@ func (c *RoleController) GetAll() {
 // @router / [post]
 func (c *RoleController) Post()  {
 	var model models.SysRole
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5001)
-		}
-	}
+	c.Valid(&model)
 	_, e := models.AddRole(&model)
 	if e != nil {
 		c.Fail(e.Error(),5002)
@@ -67,14 +61,8 @@ func (c *RoleController) Post()  {
 // @router / [put]
 func (c *RoleController) Put()  {
 	var model models.SysRole
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5003)
-		}
-	}
+	c.Valid(&model)
 	e := models.UpdateByRole(&model)
 	if e != nil {
 		c.Fail(e.Error(),5004)

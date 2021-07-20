@@ -2,7 +2,7 @@
 
 
 #### 项目简介
-beego-vue-admin基于当前流行技术组合的前后端RBAC管理系统：Go1.15.x+Beego2.x+Jwt+Redis+Mysql8+Vue
+beego-vue-admin(目前版本v1.2)基于当前流行技术组合的前后端RBAC管理系统：Go1.15.x+Beego2.x+Jwt+Redis+Mysql8+Vue
 的前后端分离系统，权限控制采用 RBAC，支持数据字典与数据权限管理，支持动态路由等
 
 **体验地址：**  [https://go.yixiang.co](https://go.yixiang.co)
@@ -24,6 +24,7 @@ beego-vue-admin基于当前流行技术组合的前后端RBAC管理系统：Go1.
 - 部门管理：可配置系统组织架构，树形表格展示 
 - 岗位管理：配置各个部门的职位 
 - 字典管理：可维护常用一些固定的数据，如：状态，性别等 
+- 日志管理：用户操日志记录 
 
 
 #### 详细结构
@@ -41,14 +42,15 @@ beego-vue-admin基于当前流行技术组合的前后端RBAC管理系统：Go1.
     - base.go 公共控制器
 - fiters 过滤器
 - initialize 初始化
-- dto dto模块
 - logs 日志存放
 - models 公共模型
+	- dto dto模块
+	- vo vo模块
+    - xxx.go 公共model
 - routers 路由
 - static 上传图片资源目录
 - swagger swagger
 - tests tests
-- vo vo模块
 ```
 #### 启动与部署
 ```

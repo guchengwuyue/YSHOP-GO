@@ -2,10 +2,9 @@ package admin
 
 import (
 	"encoding/json"
-	"github.com/beego/beego/v2/core/validation"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/vo"
 )
 
 // 字典api
@@ -36,14 +35,8 @@ func (c *DictController) GetAll() {
 // @router / [post]
 func (c *DictController) Post()  {
 	var dictModel models.SysDict
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &dictModel)
-	b, _ := valid.Valid(&dictModel)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5001)
-		}
-	}
+	c.Valid(&dictModel)
 	_, e := models.AddDict(&dictModel)
 	if e != nil {
 		c.Fail(e.Error(),5002)
@@ -57,14 +50,8 @@ func (c *DictController) Post()  {
 // @router / [put]
 func (c *DictController) Put()  {
 	var dictModel models.SysDict
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &dictModel)
-	b, _ := valid.Valid(&dictModel)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5003)
-		}
-	}
+	c.Valid(&dictModel)
 	e := models.UpdateByDict(&dictModel)
 	if e != nil {
 		c.Fail(e.Error(),5004)

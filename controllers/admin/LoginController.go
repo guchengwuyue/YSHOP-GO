@@ -10,9 +10,9 @@ import (
 	"yixiang.co/yshop/common/jwt"
 	"yixiang.co/yshop/common/untils"
 	"yixiang.co/yshop/controllers"
-	"yixiang.co/yshop/dto"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/dto"
+	"yixiang.co/yshop/models/vo"
 )
 
 // 登录api

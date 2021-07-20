@@ -3,10 +3,9 @@ package admin
 import (
 	"encoding/json"
 	"github.com/beego/beego/v2/core/logs"
-	"github.com/beego/beego/v2/core/validation"
 	"yixiang.co/yshop/controllers"
 	"yixiang.co/yshop/models"
-	"yixiang.co/yshop/vo"
+	"yixiang.co/yshop/models/vo"
 )
 // 部门api
 type DeptController struct {
@@ -37,14 +36,8 @@ func (c *DeptController) GetAll() {
 // @router / [post]
 func (c *DeptController) Post()  {
 	var model models.SysDept
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5001)
-		}
-	}
+	c.Valid(&model)
 	_, e := models.AddDept(&model)
 	if e != nil {
 		c.Fail(e.Error(),5002)
@@ -58,14 +51,8 @@ func (c *DeptController) Post()  {
 // @router / [put]
 func (c *DeptController) Put()  {
 	var model models.SysDept
-	valid := validation.Validation{}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &model)
-	b, _ := valid.Valid(&model)
-	if !b {
-		for _, err := range valid.Errors {
-			c.Fail(err.Message,5003)
-		}
-	}
+	c.Valid(&model)
 	e := models.UpdateByDept(&model)
 	if e != nil {
 		c.Fail(e.Error(),5004)
