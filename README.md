@@ -1,20 +1,29 @@
-<h1 style="text-align: center">beego-vue-admin 后台管理系统</h1>
+<h1 style="text-align: center">go-mall意象商城后台管理系统</h1>
 
 
 #### 项目简介
-beego-vue-admin(目前版本v1.2)基于当前流行技术组合的前后端RBAC管理系统：Go1.15.x+Beego2.x+Jwt+Redis+Mysql8+Vue
-的前后端分离系统，权限控制采用 RBAC，支持数据字典与数据权限管理，支持动态路由等
+go-mall意象商城后台管理系统(目前版本v1.2)基于当前流行技术组合的前后端商城管理系统：Go1.15.x+Beego2.x+Jwt+Redis+Mysql8+Vue
+的前后端分离电商管理系统，权限控制采用RBAC，支持商城多级分类，商品管理、商品sku、图片素材、数据字典与数据权限管理，支持动态路由等
 
 **体验地址：**  [https://go.yixiang.co](https://go.yixiang.co)
 
 **账号密码：** `admin / 123456`
 
+####  v1.3版本预告（喜欢的小伙伴star下哦，就是对我对最大支持）：
+1、新增图片素材库
+
+2、新增商品分类
+
+3、新增商品管理
+
+4、新增商品sku
+
 #### 项目源码
 
 |     |   后端源码  |   前端源码  |
 |---  |--- | --- |
-|  码云  |  https://gitee.com/guchengwuyue/beego-vue-admin   |  https://gitee.com/guchengwuyue/beego-vue-admin-web   |
-|  github   | https://github.com/guchengwuyue/beego-vue-admin  |  https://github.com/guchengwuyue/beego-vue-admin-web |
+|  码云  |  https://gitee.com/guchengwuyue/go-mall   |  https://gitee.com/guchengwuyue/go-mall-vue   |
+|  github   | https://github.com/guchengwuyue/go-mall  |  https://github.com/guchengwuyue/go-mall-vue |
 
 
 ####  系统功能
