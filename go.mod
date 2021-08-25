@@ -5,7 +5,7 @@ go 1.15
 require github.com/beego/beego/v2 v2.0.1
 
 require (
-	github.com/casbin/casbin v1.9.1
+	github.com/beego/bee/v2 v2.0.2 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gomodule/redigo v2.0.0+incompatible
